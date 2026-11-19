@@ -1,0 +1,194 @@
+---
+import {
+  Badge,
+  Button,
+  ButtonLink,
+  Card,
+  Icon,
+  Link,
+  Stat
+} from '@santi020k/lumen-astro'
+
+import catScratcher from '../assets/cat-scratcher.jpg'
+import groomingBrush from '../assets/brush.jpg'
+import chickenTreats from '../assets/Treats.jpg'
+import dailyLeash from '../assets/leash.jpg'
+import ropeChew from '../assets/Rope-chew.webp'
+import squeakyToy from '../assets/squeaky.webp'
+
+const products = [
+  {
+    id: 'chicken-treats',
+    name: 'Chicken Training Treats',
+    description: 'Small, tasty bites for rewarding good behavior.',
+    price: 12,
+    image: chickenTreats
+  },
+  {
+    id: 'rope-chew',
+    name: 'Braided Rope Chew',
+    description: 'A durable cotton toy for tugging and teething.',
+    price: 16,
+    image: ropeChew
+  },
+  {
+    id: 'cat-scratcher',
+    name: 'Cardboard Cat Scratcher',
+    description: 'A cozy scratching surface that helps protect furniture.',
+    price: 28,
+    image: catScratcher
+  },
+  {
+    id: 'grooming-brush',
+    name: 'Soft Grooming Brush',
+    description: 'Gently removes loose fur and keeps coats smooth.',
+    price: 18,
+    image: groomingBrush
+  },
+  {
+    id: 'daily-leash',
+    name: 'Adjustable Daily Leash',
+    description: 'A comfortable, sturdy leash for everyday walks.',
+    price: 24,
+    image: dailyLeash
+  },
+  {
+    id: 'plush-toy',
+    name: 'Squeaky Plush Friend',
+    description: 'A soft, squeaky companion for indoor playtime.',
+    price: 15,
+    image: squeakyToy
+  }
+] as const
+---
+
+<section class="starter-container starter-store-heading">
+  <div class="starter-store-brand">
+    Pet Care Plus<span> / pet essentials</span>
+  </div>
+  <Link href="#bag">
+    <Icon name="shopping-bag" /> Your bag <span data-cart-count>0</span>
+  </Link>
+</section>
+<section class="starter-container starter-store-hero">
+  <div>
+    <p class="starter-eyebrow">The happy pet collection / 01</p>
+    <h1>
+      More joy,
+      <br />
+      <em>less fuss.</em>
+    </h1>
+    <p class="starter-lead">
+      Everyday essentials for walks, grooming, playtime, and cozy moments
+      at home.
+    </p>
+    <ButtonLink href="#collection" showArrow>
+      Shop pet essentials
+    </ButtonLink>
+  </div>
+  <div class="starter-featured-product">
+      <div class="starter-product-art">
+        <img
+          class="starter-product-photo"
+          src={chickenTreats.src}
+          alt="Chicken training treats"
+        />
+      </div>
+    <div>
+      <span>Chicken Training Treats</span>
+      <strong>$12</strong>
+    </div>
+    <Badge variant="outline">Trainer favorite</Badge>
+  </div>
+</section>
+<section class="starter-container starter-section" id="collection">
+  <div class="starter-section-heading">
+    <div>
+      <p class="starter-eyebrow">Made for happy pets</p>
+      <h2>
+        Good care.
+        <br />
+        <em>Every day.</em>
+      </h2>
+    </div>
+    <p>
+      Thoughtful picks for dogs and cats, from rewarding treats to everyday
+      grooming and play.
+    </p>
+  </div>
+  <div class="starter-product-grid">
+    {products.map(product => (
+      <Card as="article" class="starter-product-card">
+        <div class="starter-product-art">
+          <img
+            class="starter-product-photo"
+            src={product.image.src}
+            alt={product.name}
+            loading="lazy"
+          />
+        </div>
+        <div class="starter-product-copy">
+          <div class="starter-between">
+            <h3>{product.name}</h3>
+            <strong>${product.price}</strong>
+          </div>
+          <p>{product.description}</p>
+          <Button variant="outline" data-add-product={product.id}>
+            <Icon name="plus" /> Add to bag
+            <span class="starter-sr-only">, {product.name}</span>
+          </Button>
+        </div>
+      </Card>
+    ))}
+  </div>
+</section>
+<section
+  class="starter-container starter-section starter-cart-layout"
+  id="bag"
+  aria-labelledby="bag-title"
+>
+  <div>
+    <p class="starter-eyebrow">A few good things</p>
+    <h2 id="bag-title">Your bag.</h2>
+    <p class="starter-lead">Keep the things you love close.</p>
+    <p class="starter-muted">
+      Pet essentials shop · Prices in USD. Shipping and tax are calculated at
+      checkout.
+    </p>
+  </div>
+  <Card class="starter-cart">
+    <p data-cart-empty>Your bag is waiting for something lovely.</p>
+    <ul class="starter-cart-items" aria-label="Items in your bag">
+      {products.map(product => (
+        <li data-cart-row={product.id} data-price={product.price} hidden>
+          <div>
+            <strong>{product.name}</strong>
+            <span>
+              <span data-cart-quantity>0</span> × ${product.price}
+            </span>
+          </div>
+          <Button
+            variant="ghost"
+            size="sm"
+            data-remove-product={product.id}
+            aria-label={`Remove ${product.name}`}
+          >
+            Remove
+          </Button>
+        </li>
+      ))}
+    </ul>
+    <div class="starter-cart-total">
+      <Stat variant="bare" label="Subtotal" value="$0.00" data-cart-total />
+    </div>
+    <Button data-demo-checkout disabled>
+      Preview checkout <Icon name="arrow-right" />
+    </Button>
+    <p class="starter-fine" data-cart-status role="status" aria-live="polite">
+      Add a pet essential to get started.
+    </p>
+  </Card>
+</section>
+<script>
+  import '../scripts/cart'
+</script>

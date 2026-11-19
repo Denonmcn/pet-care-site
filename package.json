@@ -1,0 +1,24 @@
+{
+  "name": "pet-care-plus",
+  "version": "1.0.0",
+  "private": true,
+  "description": "A friendly pet care website for Pet Care Plus.",
+  "type": "module",
+  "scripts": {
+    "dev": "astro dev",
+    "build": "astro build",
+    "preview": "astro preview",
+    "check": "astro check"
+  },
+  "dependencies": {
+    "@santi020k/lumen-astro": "catalog:",
+    "astro": "catalog:"
+  },
+  "devDependencies": {
+    "@astrojs/check": "catalog:",
+    "typescript": "catalog:"
+  },
+  "engines": { "node": ">=22.23.4" },
+  "packageManager": "pnpm@12.18.0",
+  "license": "MIT"
+}

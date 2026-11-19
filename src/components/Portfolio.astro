@@ -1,0 +1,179 @@
+---
+import {
+  Badge,
+  Button,
+  ButtonLink,
+  Card,
+  Icon,
+  Link
+} from '@santi020k/lumen-astro'
+
+const projects = [
+  {
+    number: '01',
+    title: 'Happy, Healthy Daily Walks',
+    category: 'Daily Care',
+    type: 'Dog walking · Individual visits',
+    description:
+      'Unhurried walks tailored to your dog’s pace, personality, and daily routine.',
+    style: 'starter-project-art-form',
+    heading: 'Walks for\nwagging tails.'
+  },
+  {
+    number: '02',
+    title: 'Fresh Coats and Tidy Paws',
+    category: 'Grooming',
+    type: 'Pet grooming · Gentle care',
+    description:
+      'Bathing, brushing, nail trims, and coat care for pets who deserve to feel their best.',
+    style: 'starter-project-art-field',
+    heading: 'Clean paws,\nhappy hearts.'
+  },
+  {
+    number: '03',
+    title: 'Comfort While You’re Away',
+    category: 'Pet Sitting',
+    type: 'Pet sitting · In-home care',
+    description:
+      'Familiar surroundings, regular routines, and plenty of updates for peace of mind.',
+    style: 'starter-project-art-clarity',
+    heading: 'Loved while\nyou’re away.'
+  },
+  {
+    number: '04',
+    title: 'Confident, Positive Puppy Training',
+    category: 'Training',
+    type: 'Puppy training · Positive methods',
+    description:
+      'Friendly, practical lessons that build good habits and strengthen your bond.',
+    style: 'starter-project-art-studio',
+    heading: 'Small paws,\nbig beginnings.'
+  }
+]
+---
+
+<section class="starter-container starter-portfolio-intro">
+  <div class="starter-between">
+    <span class="starter-portfolio-wordmark">
+      Pet Care Plus<span> / services for happy pets</span>
+    </span>
+    <Badge variant="outline">
+      <span class="starter-dot"></span> Pet care services
+    </Badge>
+  </div>
+  <h1>
+    Thoughtful care
+    <br />
+    <em>for every companion.</em>
+  </h1>
+  <div class="starter-portfolio-summary">
+    <p class="starter-lead">
+      From active outings to calm cuddle time, we personalize every visit
+      around your pet’s needs, routine, and personality.
+    </p>
+    <ButtonLink href="#selected-work" variant="ghost" showArrow>
+      See our services
+    </ButtonLink>
+  </div>
+</section>
+<section
+  class="starter-container starter-section"
+  id="selected-work"
+  aria-labelledby="work-heading"
+>
+  <div class="starter-between starter-work-header">
+    <div>
+      <p class="starter-eyebrow">Ways we care</p>
+      <h2 id="work-heading">Our pet care services</h2>
+    </div>
+    <div class="starter-filters" role="group" aria-label="Filter pet care services">
+      {['All', 'Daily Care', 'Grooming', 'Pet Sitting', 'Training'].map(category => (
+        <Button
+          variant="ghost"
+          data-project-filter={category}
+          aria-pressed={category === 'All'}
+        >
+          {category}
+        </Button>
+      ))}
+    </div>
+  </div>
+  <p class="starter-sr-only" data-project-status role="status">
+    Showing all 4 services.
+  </p>
+  <div class="starter-project-grid">
+    {projects.map(project => (
+      <article data-project-category={project.category}>
+        <Card class:list={['starter-project-art', project.style]}>
+          <span>
+            {project.number} / {project.category}
+          </span>
+          <strong>{project.heading}</strong>
+          <div class="starter-project-shape" aria-hidden="true"></div>
+          <Icon name="arrow-up-right" />
+        </Card>
+        <div class="starter-project-copy">
+          <p class="starter-eyebrow">{project.type}</p>
+          <h3>{project.title}</h3>
+          <p>{project.description}</p>
+        </div>
+      </article>
+    ))}
+  </div>
+</section>
+<section class="starter-container starter-section starter-about" id="about">
+  <div>
+    <p class="starter-eyebrow">A little about us</p>
+    <h2>
+      Patient by nature.
+      <br />
+      <em>Warm by heart.</em>
+    </h2>
+  </div>
+  <div>
+    <p>
+      We’re a caring team for dogs and cats, with experience in walks,
+      grooming, home visits, and positive puppy training.
+    </p>
+    <p>
+      We take time to learn each pet’s routine and preferences, so every
+      visit feels comfortable, familiar, and safe.
+    </p>
+    <Link href="#selected-work">
+      Explore our pet care services{' '}
+      <Icon name="arrow-up-right" />
+    </Link>
+  </div>
+</section>
+<script>
+  const filters = document.querySelectorAll<HTMLButtonElement>(
+    '[data-project-filter]'
+)
+
+  const projects = document.querySelectorAll<HTMLElement>(
+    '[data-project-category]'
+)
+
+  for (const filter of filters) {
+    filter.addEventListener('click', () => {
+      const category = filter.dataset.projectFilter
+      let count = 0
+
+      for (const project of projects) {
+        project.hidden =
+          category !== 'All' && project.dataset.projectCategory !== category
+
+        if (!project.hidden) count += 1
+      }
+
+      for (const button of filters)
+        button.setAttribute('aria-pressed', String(button === filter))
+
+      document
+        .querySelector('[data-project-status]')
+        ?.replaceChildren(
+          `Showing ${count} ${category === 'All' ? '' : `${category?.toLowerCase()} `}services.`
+      )
+    })
+  }
+</script>

@@ -1,0 +1,185 @@
+---
+import {
+  Badge,
+  ButtonLink,
+  Card,
+  Icon,
+  Link,
+  Progress
+} from '@santi020k/lumen-astro'
+
+import dogWalking from '../assets/dog-walking.jpg'
+import petGrooming from '../assets/Pet-Grooming.jpg'
+import petSitting from '../assets/pet-sitting.jpg'
+
+interface Props {
+  basePath: string
+}
+
+const { basePath } = Astro.props
+
+const templates = [
+  {
+    number: '01',
+    name: 'Walks made for tail wags',
+    route: 'ecommerce',
+    text: 'Reliable dog walking with plenty of fresh air, exercise, and personal attention.',
+    image: dogWalking
+  },
+  {
+    number: '02',
+    name: 'Cozy overnight care',
+    route: 'dashboard',
+    text: 'Comfortable boarding and pet sitting from caregivers who treat every pet like family.',
+    image: petSitting
+  },
+  {
+    number: '03',
+    name: 'Fresh, fluffy, and happy',
+    route: 'portfolio',
+    text: 'Gentle grooming for shiny coats, tidy paws, and your pet’s happiest self.',
+    image: petGrooming
+  }
+] as const
+---
+
+<section class="starter-hero starter-container">
+  <div class="starter-hero-copy">
+    <Badge variant="outline">Trusted care for every furry friend</Badge>
+    <h1>
+      Pet care your
+      <br />
+      best friend <em>deserves.</em>
+    </h1>
+    <p class="starter-lead">
+      From joyful walks to cozy stays and gentle grooming, we give every pet
+      warm, dependable care that fits their routine.
+    </p>
+    <div class="starter-actions">
+      <ButtonLink href="#templates" showArrow>
+        See our services
+      </ButtonLink>
+      <ButtonLink href={`${basePath}/dashboard`} variant="ghost">
+        Book a visit
+      </ButtonLink>
+    </div>
+    <p class="starter-fine">
+      Caring hands. Happy paws. Peace of mind.
+    </p>
+  </div>
+  <div
+    class="starter-hero-art"
+    aria-label="A preview of the Pet Care Plus website"
+  >
+    <div class="starter-orbit" aria-hidden="true"></div>
+    <Card class="starter-mini-window">
+      <div class="starter-mini-heading">
+        <span class="starter-dots" aria-hidden="true">
+          ● ● ●
+        </span>
+        <span>A happy day for them</span>
+        <Icon name="arrow-up-right" />
+      </div>
+      <div class="starter-mini-content">
+        <Badge variant="secondary">Care made personal</Badge>
+        <h2>
+          More walks.
+          <br />
+          <em>More tail wags.</em>
+        </h2>
+        <div class="starter-mini-grid">
+          <div class="starter-mini-tile">
+            <Icon name="layers" size="lg" />
+            <strong>Dog walking</strong>
+            <span>Playful, on-time outings</span>
+          </div>
+          <div class="starter-mini-tile starter-mini-tile-accent">
+            <Icon name="sparkles" size="lg" />
+            <strong>Happy, cared for</strong>
+            <span>Updates at every visit</span>
+          </div>
+        </div>
+        <div class="starter-progress-label">
+          <span>Tail-wag check</span>
+          <strong>Delighted</strong>
+        </div>
+        <Progress value={100} aria-label="Pet Care Plus website readiness" />
+      </div>
+    </Card>
+    <div class="starter-art-caption">
+      <span class="starter-dot"></span> A little extra love, every day.
+    </div>
+  </div>
+</section>
+<section class="starter-values" aria-label="Pet care services">
+  <div class="starter-container starter-values-inner">
+    <span>
+      <Icon name="palette" /> Dog walking
+    </span>
+    <span>
+      <Icon name="sun-moon" /> Grooming
+    </span>
+    <span>
+      <Icon name="keyboard" /> Boarding
+    </span>
+    <span>
+      <Icon name="code" /> Pet sitting
+    </span>
+  </div>
+</section>
+<section class="starter-container starter-section" id="templates">
+  <div class="starter-section-heading">
+    <div>
+      <p class="starter-eyebrow">Care for every companion</p>
+      <h2>
+        Four ways to keep
+        <br />
+        <em>tails happy.</em>
+      </h2>
+    </div>
+    <p>
+      Choose the care your pet needs, from energetic outings to soothing
+      overnight stays and everything in between.
+    </p>
+  </div>
+  <div class="starter-template-grid">
+    {templates.map(template => (
+      <Card class="starter-template-card" as="article">
+        <div class="starter-template-art">
+          <span>{template.number}</span>
+          <img
+            class="starter-service-image"
+            src={template.image.src}
+            alt={template.name}
+            loading="lazy"
+          />
+        </div>
+        <div class="starter-template-copy">
+          <h3>{template.name}</h3>
+          <p>{template.text}</p>
+          <Link href={`${basePath}/${template.route}`}>
+            View this care <Icon name="arrow-up-right" />
+          </Link>
+        </div>
+      </Card>
+    ))}
+  </div>
+</section>
+<section class="starter-container starter-section starter-closing">
+  <p class="starter-eyebrow">A familiar face they’ll love</p>
+  <h2>
+    Ready for a happier
+    <br />
+    <em>day together?</em>
+  </h2>
+  <p>
+    Tell us about your pet and the care they need. We’ll help plan a
+    comfortable visit, walk, grooming session, or stay.
+  </p>
+  <ButtonLink
+    href={`${basePath}/portfolio`}
+    showArrow
+  >
+    Book a Pet Care Plus visit
+  </ButtonLink>
+</section>
