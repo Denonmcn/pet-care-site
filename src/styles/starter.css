@@ -120,17 +120,6 @@
   color: hsl(var(--ink));
   box-shadow: 0 2px hsl(var(--brand));
 }
-.starter-appearance {
-  display: flex;
-  gap: 0.65rem;
-  align-items: center;
-}
-.starter-appearance .ui-select-field {
-  width: 132px;
-}
-.starter-appearance .ui-theme-toggle {
-  flex-shrink: 0;
-}
 .starter-section {
   padding-block: 5.5rem;
 }
@@ -853,9 +842,6 @@
     order: 3;
     width: 100%;
     justify-content: center;
-  }
-  .starter-appearance {
-    margin-left: auto;
   }
   .starter-hero {
     gap: 2rem;
